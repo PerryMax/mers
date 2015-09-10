@@ -1,0 +1,63 @@
+#include "stdafx.h"
+#include "iostream"
+#include "stdio.h"
+#include "math.h"
+
+using namespace std;
+
+class calculating{
+	//Данные:
+
+	double x, y, z, g, result;
+public:
+	void Set(double X, double Y, double Z);
+	void Run(void);
+	void Print(void);
+};
+	
+	void calculating::Set(double X, double Y, double Z)
+	{
+		x = X;
+		y = Y;
+		z = Z;
+	}
+	void calculating::Run(void){
+		g = 5 * atan(x) - 0.25*acos(x)*((x + 3 * abs(x - y) + pow(x, 2)) / (abs(x - y)*z + pow(x, 2)));
+	}
+	void calculating::Print(void){
+		cout << "Результат (G): " << g << endl;
+	}
+
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale (LC_ALL, "");
+	calculating obj1;
+	cout << "Прямой вызов (первый обьект): " << endl;
+	obj1.Set(0.1722, 6.33, 3.25*pow(10,-4));
+	obj1.Run();
+	obj1.Print();
+
+	calculating *UkazatelNaObj1 = &obj1;
+	cout << "\nКосвенный вызов (первый обьект): " << endl;
+	UkazatelNaObj1->Set(0.1722, 6.33, 3.25*pow(10, -4));
+	UkazatelNaObj1->Run();
+	UkazatelNaObj1->Print();
+
+	calculating *obj2 = new calculating;
+	cout << "\nПрямой вызов (второй обьект): " << endl;
+	(*obj2).Set(0.1722, 6.33, 3.25*pow(10, -4));
+	(*obj2).Run();
+	(*obj2).Print();
+
+	calculating *UkazatelNaObj2 = obj2;
+	cout << "\nКосвенный вызов (второй обьект): " << endl;
+	UkazatelNaObj2->Set(0.1722, 6.33, 3.25*pow(10, -4));
+	UkazatelNaObj2->Run();
+	UkazatelNaObj2->Print();
+
+	cin.get();
+	return 0;
+}

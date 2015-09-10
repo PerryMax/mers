@@ -1,0 +1,63 @@
+// pasha_homework_1_2.cpp: определяет точку входа для консольного приложения.
+//
+
+#include "stdafx.h"
+#include "iostream"
+
+using namespace std;
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, "");
+
+	int n = 5, m = 4;
+	int *A = new int[n];
+	int *B = new int[m];
+	int multA = 1, multB = 1, countA = 0, countB = 0;
+
+
+	//======
+	cout << "Введите массив A (5 элементов): \n";
+	for (int i = 0; i < 5; i++){
+		cout << i+1 << ": ";
+		cin >> *(A+i);
+		countA++;
+	}
+
+	//======
+		cout << "\nВведите массив B (4 элемента): \n";
+		for (int i = 0; i < 4; i++){
+			cout << i+1 << ": ";
+			cin >> *(B+i);
+			countB++;
+		}
+
+	//======
+
+
+	for (int i = 0; i < countA; i++)
+		multA = multA * *(A+i); 
+	for (int i = 0; i < countB; i++)
+		multB = multB * *(B+i);
+
+	//======
+
+	if (multA > multB)
+	{
+		cout << "Произведение элементов массива А больше В, массив B: ";
+		for (int i = 0; i < countB; i++)
+			cout << *(B+i) << ", ";
+	}
+	cout << endl;
+	if (multA < multB){
+		cout << "Произведение элементов массива B больше A, массив A: ";
+		for (int i = 0; i < countA; i++)
+			cout << *(A+i) << ", ";
+	}
+	cout << endl;
+	if (multA == multB){
+
+		cout << "Произведение элементов обоих массивов равны." << endl;
+	}
+		return 0;
+}

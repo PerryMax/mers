@@ -1,0 +1,64 @@
+
+
+
+#include "stdafx.h"
+#include "iostream"
+#include "stdio.h"
+
+using namespace std;
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, "Russian");
+
+	int n, k = 0, i = 0, j = 0;
+
+	cout << "Введите размерность массива N: ";
+	cin >> n;
+	int *A = new int[n];
+
+	cout << "Введите массив (число - Enter): ";
+	for (i = 0; i < n; i++){
+		cout << i + 1 << ": ";
+		cin >> *(A+i);
+	}
+
+
+
+	int *B = new int[n];
+	int count = 0, t;
+
+	cout << "Введите число, значения в массиве которые выше этого числа будут переведены в массив B[k]: ";
+	cin >> t;
+
+	for (i = 0; i < n; i++){
+		if (*(A + i) > t) {
+			*(B+k++) = *(A + i);
+			count = count + 1;
+		}
+	}
+
+
+
+	//-------------------------------------------
+
+	cout << "Исходный массив: ";
+	for (i = 0; i < n; i++){
+		cout << *(A + i) << " ";
+		cout.width(3);
+	}
+
+	cout << "\nПолученный вектор: ";
+	for (i = 0; i < k; i++)
+		cout << *(B+i) << " ";
+	cout << "\nРазмерность вектора: ";
+	cout << k << endl;
+
+	delete[] A;
+	delete[] B;
+	cin.get();
+	return 0;
+}
+

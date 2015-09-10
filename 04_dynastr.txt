@@ -1,0 +1,86 @@
+#include "stdafx.h"
+#include "String.h"
+#include <iostream>
+
+using namespace std;
+
+class String
+{
+private:
+	char* mStr;
+	char* mStrReturn;
+public:
+	static const int SIZE = 255;
+	String();
+	~String();
+	void set(char*str);
+	void print();
+	void run();
+	String& operator=(String& other);
+	friend ostream& operator << (ostream &os, String &s);
+};
+
+String::String()
+{
+	mStr = new char[SIZE];
+	mStrReturn = new char[SIZE];
+	mStr[0] = '\0';
+	mStrReturn[0] = '\0';
+
+}
+
+
+String::~String()
+{
+	delete[]mStr;
+	delete[]mStrReturn;
+}
+
+void String::set(char*str){
+	strcpy_s(mStr, SIZE, str);
+}
+
+void String::print(){
+	cout << "Original string: " << mStr << endl;
+	cout << "Processed string: " << mStrReturn << endl;
+}
+
+void String::run(){
+	int n;
+	int n2;
+	n = strlen(mStr);
+	n2 = n;
+	while ((n > 0) && (!isdigit(mStr[n])) ) n--;
+	strcpy_s(mStrReturn, SIZE, mStr + n);
+}
+
+String& String::operator=(String& other){
+	strcpy_s(mStr, SIZE, other.mStr);
+	strcpy_s(mStrReturn, SIZE, other.mStrReturn);
+	return *this;
+}
+
+ostream& operator <<(ostream& os, String& s){
+	os << s.mStr << " " << s.mStrReturn;
+	return os;
+}
+
+
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	String* s = new String;
+	char in[String::SIZE];
+	cout << "enter a String: " << endl;
+	cin.getline(in, String::SIZE - 1);
+      String s1;
+	s1.set(in);
+	s1.run();
+	s1.print();
+       delete s1;
+	s->set(in);
+	s->run();
+	s->print();
+	delete s;
+	return 0;
+}

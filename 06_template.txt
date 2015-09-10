@@ -1,0 +1,121 @@
+#include "stdafx.h"
+#include <iostream>
+#include <vector>
+#include <complex>
+
+using namespace std;
+inline static int min(int a, int b)
+{
+	return a > b ? b : a;
+}
+
+template < class T > class Task13
+{
+private:
+	T *mt;
+	T *mtResult;
+	int msize;
+	int maxSize;
+	void regenResult();
+	void resize(int capacity);
+	static const int DEFAULTMAXSIZE = 16;
+public:
+	Task13();
+	Task13(T *param, int size);
+	T& operator[](int index);
+	void push(T t);
+	int size();
+	~Task13();
+};
+
+template <class T > void Task13<T>::regenResult()
+{
+	int n = msize;
+	for (int i = 0; i < msize; i++){
+		mtResult[i] = mt[i] * T(n);
+		n--;
+	}
+}
+
+template <class T> void Task13<T>::resize(int capacity) {
+	T* nmt = new T[capacity];
+	T* nmtResult = new T[capacity];
+	for (int i = 0; i < min(capacity, msize); i++){
+		nmt[i] = mt[i];
+	}
+	delete[] mt;
+	delete[] mtResult;
+	mt = nmt;
+	mtResult = nmtResult;
+	msize = capacity;
+	maxSize = capacity;
+}
+
+template <class T> Task13 < T > ::Task13(){
+	maxSize = DEFAULTMAXSIZE;
+	msize = 0;
+	mt = new T[maxSize];
+	mtResult = new T[maxSize];
+}
+template <class T> Task13 < T > ::Task13(T *param, int size){
+	msize = size;
+	maxSize = size;
+	mt = new T[maxSize];
+	mtResult = new T[maxSize];
+	for (int i = 0; i < size; i++){
+		mt[i] = param[i];
+	}
+	regenResult();
+}
+
+template <class T> T& Task13<T>::operator[](int index){
+	return mtResult[index];
+}
+template < class T> void Task13<T>::push(T t) {
+	if (msize == maxSize) {
+		resize(msize + 1);
+		mt[msize - 1] = t;
+	}
+	else{
+		mt[msize] = t;
+		msize++;
+	}
+	regenResult();
+}
+
+template < class T> int Task13<T>::size() {
+	return msize;
+}
+
+template <class T> Task13<T>::~Task13() {
+	delete[] mt;
+	delete[] mtResult;
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	//int initial_nums[] = { 1, 1, 1, 1, 1 };
+
+	//int count = sizeof(initial_nums) / sizeof(initial_nums[0]);
+	//Task13 < int > *task13 = new Task13<int>(initial_nums, count);
+	Task13 <complex<double>> *task13 = new Task13<complex<double>>();
+	task13->push(complex<double>(1, 1));
+	task13->push(complex<double>(1, 1));
+	task13->push(complex<double>(1, 1));
+	task13->push(complex<double>(1, 1));
+	task13->push(complex<double>(1, 1));
+	for (int i = 0; i < task13->size(); i++) {
+		cout << (*task13)[i] << endl;
+	}
+	cout << "-----" << endl;
+	Task13<int> t2;
+	t2.push(1);
+	t2.push(2);
+	t2.push(3);
+	t2.push(4);
+	t2.push(5);
+	for (int i = 0; i < 5; i++) {
+		cout << t2[i] << endl;
+	}
+	delete task13;
+	return 0;
+}

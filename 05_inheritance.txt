@@ -1,0 +1,95 @@
+#include "stdafx.h"
+#include <iostream>
+using namespace std;
+class X
+{
+protected:
+	int mx1, mx2;
+
+public:
+	X(int x1, int x2);
+	virtual ~X();
+	virtual int getx1() = 0;
+	virtual int getx2() = 0;
+	virtual void setx1(int x1) = 0;
+	virtual void setx2(int x2) = 0;
+
+};
+
+class Y :
+	public X
+{
+private:
+	int my;
+
+public:
+	Y(int x1, int x2, int y);
+	virtual int getx1();
+	virtual int getx2();
+	virtual void setx1(int x1);
+	virtual void setx2(int x2);
+	int run();
+	int gety();
+	void sety(int y);
+
+
+
+	virtual ~Y();
+};
+
+X::X(int x1, int x2)
+{
+	mx1 = x1;
+	mx2 = x2;
+}
+
+
+X::~X()
+{
+	std::cout << "~X" << std::endl;
+}
+Y::Y(int x1, int x2, int y) : X(x1, x2), my(y)
+{
+}
+
+
+Y::~Y()
+{
+	std::cout << "~Y" << std::endl;
+}
+
+int Y::getx1() {
+	return mx1;
+}
+int Y::getx2() {
+	return mx2;
+}
+void Y::setx1(int x1) {
+	mx1 = x1;
+}
+void Y::setx2(int x2) {
+	mx2 = x2;
+}
+int Y::run(){
+	return (mx1 - mx2)*my;
+}
+int Y::gety(){
+	return my;
+}
+void Y::sety(int y){
+	my = y;
+}
+int _tmain(int argc, _TCHAR* argv[])
+{
+	X *x = new Y(1, 2, 3);
+	cout << "x->getx1(): " << x->getx1() << endl;
+	cout << "x->getx2(): " << x->getx2() << endl;
+	Y *y = dynamic_cast<Y*>(x);
+	cout << "y->getx1(): " << y->getx1() << endl;
+	cout << "y->getx2(): " << y->getx2() << endl;
+	cout << "y->gety(): " << y->gety() << endl;
+
+	cout << "y->run(): " << y->run() << endl;
+	delete x;
+	return 0;
+}

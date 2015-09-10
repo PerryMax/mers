@@ -1,0 +1,53 @@
+#include "stdafx.h"
+#include "iostream"
+#include "stdio.h"
+#include "math.h"
+
+using namespace std;
+
+class X{
+private:
+	double *x;
+	double *y;
+	double *z;
+	double *g;
+public:
+	X();
+	~X();
+	friend void print(const X &obj);
+	friend void run(const X &obj);
+};
+
+X::X(){
+	x = new double(0.1722);
+	y = new double(6.33);
+	z = new double(3.25*pow(10,-4));
+	g = new double;
+}
+
+X::~X(){
+	delete x;
+	delete y;
+	delete z;
+	delete g;
+}
+
+void print(const X &obj){
+	cout << "Результат: G = " << *obj.g << endl;
+}
+
+void run(const X &obj){
+	*obj.g = 5 * atan(*obj.x) - 0.25*acos(*obj.x)*((*obj.x + 3 * abs(*obj.x - *obj.y) + pow(*obj.x, 2)) / (abs(*obj.x - *obj.y)**obj.z + pow(*obj.x, 2)));
+}
+
+int _tmain(int argc, _TCHAR* argv[])
+{
+	setlocale(LC_ALL, "Russian");
+
+	X object;
+	run(object);
+	print(object);
+
+	return 0;
+}
+

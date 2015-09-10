@@ -1,0 +1,79 @@
+#include <iostream>
+#include <cmath>
+#include <Windows.h>
+using namespace std;
+// вар 13
+class Calculator
+{
+private:
+	double mx, my, mz;
+	double value;
+
+public:
+	Calculator();
+	~Calculator();
+	void set(double x, double y, double z);
+	void print();
+	void run();
+};
+using namespace std;
+
+const double M_PI = 3.14159265358979323846;
+
+Calculator::Calculator()
+{
+	//cout << "Creating a Calculator instance: " << this << endl;
+}
+
+
+Calculator::~Calculator()
+{
+	//cout << "Destroying a Calculator instance: " << this << endl;
+}
+
+void Calculator::set(double x, double y, double z) {
+	mx = x;
+	my = y;
+	mz = z;
+}
+
+void Calculator::print(){
+	cout << "function value: " << value << endl;
+}
+
+void Calculator::run(){
+	//cout << "params: [ " << mx << " " << my << " " << mz << " ]" << endl;
+	value = pow(my, mx + 1) / (pow(abs(my - 2), 1. / 3.) + 3);
+	//cout << "first pass value: " << value << endl;
+	value += (mx + my / 2)*(pow(mx + 1, -1 / sin(mz))) / (2 * abs(mx + my));
+	//cout << "second pass value: " << value << endl;
+}
+int main(int argc, CHAR* argv[])
+{
+	cout << "Static allocation, direct addressing" << endl;
+	Calculator c;
+	c.set(1.23, 15.4, 252.);
+	c.run();
+	c.print();
+	cout << "Static allocation, indirect addressing" << endl;
+	Calculator c2;
+	Calculator *pc = &c2;
+	pc->set(1.23, 15.4, 252.);
+	pc->run();
+	pc->print();
+	cout << "dynamic allocation, indirect addressing" << endl;
+	Calculator *pc2 = new Calculator;
+	pc2->set(1.23, 15.4, 252.);
+	pc2->run();
+	pc2->print();
+	delete pc2;
+	/*	cout << "dynamic allocation, direct addressing" << endl;
+	Calculator *pc3 = new Calculator;
+	(*pc3).set(1.23, 15.4, 252.);
+	(*pc3).run();
+	(*pc3).print();
+	delete pc3;*/
+	//Sleep(100000);
+	return 0;
+}
+
